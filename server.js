@@ -22,15 +22,15 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-fccTesting(app); //For FCC testing purposes
+fccTesting(app); // For fCC testing purposes
 app.use('/public', express.static(process.cwd() + '/public'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.route('/').get((req, res) => {
-  res.render('index', {
-    title: 'Hello',
-    message: 'Please log in'
+  res.render('index', { 
+    title: 'Hello', 
+    message: 'Please log in' 
   });
 });
 
@@ -39,12 +39,12 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser((id, done) => {
-  // myDatabase.findOne({_id: newObject(id)}, (err, doc) => {
+  // myDataBase.findOne({ _id: new ObjectID(id) }, (err, doc) => {
   done(null, null);
   // });
 });
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log('Listening on port ' + PORT);
+  console.log(`Listening on port ${PORT}`);
 });
