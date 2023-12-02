@@ -1,8 +1,8 @@
 {
     "routes": [
         {
-            "source": "/",
-            "destination": "https://boilerplate-advancednode-freecodecamp.vercel.app/"
+            "src": "/",
+            "dest": "https://boilerplate-advancednode-freecodecamp.vercel.app/"
         }
     ]
 }
