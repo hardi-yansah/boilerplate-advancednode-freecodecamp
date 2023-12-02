@@ -1,8 +1,8 @@
 {
-    "redirects": [
+    "routes": [
         {
-            "source": "/(.*)",
-            "destination": "/"
+            "source": "/",
+            "destination": "https://boilerplate-advancednode-freecodecamp.vercel.app/"
         }
     ]
 }
