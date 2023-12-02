@@ -6,10 +6,6 @@ const fccTesting = require('./freeCodeCamp/fcctesting.js');
 const session = require('express-session');
 const passport = require('passport');
 const { ObjectID } = require('mongodb');
-const MongoClient = require('mongodb/lib/mongo_client.js');
-
-const uri = process.env.MONGO_URI;
-const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
 const app = express();
 
@@ -61,9 +57,6 @@ myDB(async client => {
 
 const PORT = process.env.PORT || 3000;
 
-client.connect(err => {
-  if (err) { console.error(err); return false; }
-  app.listen(PORT, () => {
-    console.log('Listening on port ' + PORT);
-  });
+app.listen(PORT, () => {
+  console.log('Listening on port ' + PORT);
 });
