@@ -50,7 +50,7 @@ myDB(async client => {
   app.route('/').get(async (req, res) => {
     res.render('index', {
       title: e,
-      message: 'Unable to connect to database'
+      message: e
     });
   });
 });
