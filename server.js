@@ -54,8 +54,8 @@ myDB(async client => {
 
   app.use((req, res, next) => {
     res.status(404)
-    .type('text')
-    .send('Not Found');
+      .type('text')
+      .send('Not Found');
   });
 
   passport.use(new LocalStrategy((username, password, done) => {
