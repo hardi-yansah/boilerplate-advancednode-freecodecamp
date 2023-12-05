@@ -41,10 +41,10 @@ myDB(async client => {
 
   app.route('/login').post(passport.authenticate('local', { failureRedirect: '/'}), (req, res) => {
     res.redirect('/redirect');
-  });
+  })
 
   app.route('/login').get((req, res) => {
-    res.render('profile')
+    res.render('profile');
   })
 
   passport.use(new LocalStrategy((username, password, done) => {
@@ -74,6 +74,13 @@ myDB(async client => {
     });
   });
 });
+
+function ensureAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect('/')
+};
 
 const PORT = process.env.PORT || 3000;
 
