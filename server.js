@@ -19,7 +19,7 @@ app.use(
     resave: true,
     saveUninitialized: true,
     cookie: { secure: false },
-  }),
+  })
 );
 
 app.use(passport.initialize());
@@ -37,7 +37,7 @@ myDB(async (client) => {
   auth(app, myDataBase);
 }).catch((e) => {
   app.route("/").get((req, res) => {
-    res.render("index", { title: e, message: "Unable to connect to database" });
+    res.render("index", { title: "Error", message: "Unable to connect to database" });
   });
 });
 
