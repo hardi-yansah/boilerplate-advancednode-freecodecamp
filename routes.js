@@ -8,6 +8,7 @@ module.exports = function (app, myDataBase) {
       message: "Please log in",
       showLogin: true,
       showRegistration: true,
+      showSocialAuth: true
     });
   });
 
@@ -66,6 +67,13 @@ module.exports = function (app, myDataBase) {
     res.status(404).type("text").send("Not Found");
   });
 };
+
+function ensureAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect("/");
+}
 
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
