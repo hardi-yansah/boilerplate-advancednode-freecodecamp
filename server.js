@@ -16,14 +16,12 @@ const io = require("socket.io")(http);
 app.set("view engine", "pug");
 app.set("views", "./views/pug");
 
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET,
-    resave: true,
-    saveUninitialized: true,
-    cookie: { secure: false },
-  })
-);
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: true,
+  saveUninitialized: true,
+  cookie: { secure: false }
+}));
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -33,29 +31,23 @@ app.use("/public", express.static(process.cwd() + "/public"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-myDB(async (client) => {
+myDB(async client => {
   const myDataBase = await client.db("database").collection("users");
 
   routes(app, myDataBase);
   auth(app, myDataBase);
 
   io.on("connection", socket => {
-    console.log("user connected");
-    // socket.on("chat message", msg => {
-    //   io.emit("chat message", msg);
-    // });
-    // socket.on("disconnect", () => {
-    //   console.log("user disconnected");
-    // });
+    console.log("A user has connected");
   });
 
-}).catch((e) => {
+}).catch(e => {
   app.route("/").get((req, res) => {
-    res.render("index", { title: "Error", message: "Unable to connect to database" });
+    res.render("index", { title: e, message: "Unable to connect to database" });
   });
 });
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
+http.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
 });
