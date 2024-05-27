@@ -10,6 +10,9 @@ const auth = require("./auth.js");
 
 const app = express();
 
+const http = require("http").createServer(app);
+const io = require("socket.io")(http);
+
 app.set("view engine", "pug");
 app.set("views", "./views/pug");
 
@@ -35,6 +38,17 @@ myDB(async (client) => {
 
   routes(app, myDataBase);
   auth(app, myDataBase);
+
+  io.on("connection", socket => {
+    console.log("user connected");
+    // socket.on("chat message", msg => {
+    //   io.emit("chat message", msg);
+    // });
+    // socket.on("disconnect", () => {
+    //   console.log("user disconnected");
+    // });
+  });
+
 }).catch((e) => {
   app.route("/").get((req, res) => {
     res.render("index", { title: "Error", message: "Unable to connect to database" });
