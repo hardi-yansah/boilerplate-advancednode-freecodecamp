@@ -66,22 +66,22 @@ myDB(async client => {
     });
   });
 
-  function onAuthorizeSuccess(data, accept) {
-    console.log("successful connection to socket: ", data);
-    accept(null, true);
-  }
-
-  function onAuthorizeFail(data, message, error, accept) {
-    if (error) throw new Error(message);
-    console.log("failed connection to socket: ", data);
-    accept(null, false);
-  }
-
 }).catch(e => {
   app.route("/").get((req, res) => {
     res.render("index", { title: e, message: "Unable to connect to database" });
   });
 });
+
+function onAuthorizeSuccess(data, accept) {
+  console.log("successful connection to socket: ", data);
+  accept(null, true);
+}
+
+function onAuthorizeFail(data, message, error, accept) {
+  if (error) throw new Error(message);
+  console.log("failed connection to socket: ", data);
+  accept(null, false);
+}
 
 const PORT = process.env.PORT || 3000;
 http.listen(PORT, () => {
