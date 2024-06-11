@@ -56,13 +56,20 @@ myDB(async client => {
   let currentUsers = 0;
   io.on("connection", (socket) => {
     ++currentUsers;
-    io.emit("user count", currentUsers);
+    io.emit("user", {
+      username: socket.request.user.username,
+      currentUsers,
+      connected: true
+    });
     console.log("A user has connected");
-
     socket.on("disconnect", () => {
-      --currentUsers;
-      io.emit("user count", currentUsers);
       console.log("A user has disconnected");
+      --currentUsers;
+      io.emit("user", {
+        username: socket.request.user.username,
+        currentUsers,
+        connected: false
+      });
     });
   });
 
@@ -73,13 +80,13 @@ myDB(async client => {
 });
 
 function onAuthorizeSuccess(data, accept) {
-  console.log("successful connection to socket: ", data);
+  console.log("successful connection to socket.io");
   accept(null, true);
 }
 
 function onAuthorizeFail(data, message, error, accept) {
   if (error) throw new Error(message);
-  console.log("failed connection to socket: ", data);
+  console.log("failed connection to socket: ", message);
   accept(null, false);
 }
 
